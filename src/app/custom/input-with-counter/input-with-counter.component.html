@@ -1,0 +1,28 @@
+<!--todo: mat form fields should have a style="width: 500px" (inline style removal)-->
+<mat-form-field style="width: 100%">
+  <mat-label>{{to.label}}</mat-label>
+  <input matInput
+         #genericInput
+         [id]="to.id"
+         [type]="to.type"
+         [formlyAttributes]="field"
+         [formControl]="formControl"
+         [minlength]="to.minLength"
+         [maxlength]="to.maxLength"
+         [required]="to.required"
+  >
+  <mat-hint align="end">
+    {{genericInput.value.length}} / {{to.maxLength}}
+  </mat-hint>
+  <mat-error *ngIf="formControl.hasError(errorStr$ | async)">
+    <span>{{(errorMsgStr$ | async) || ''}}</span>
+    <!--todo: remove all inline styles-->
+    <span style="float: right">{{genericInput.value.length}} / {{to.maxLength}}</span>
+  </mat-error>
+</mat-form-field>
+
+<!--div id="debug">{{errorStr$ | async}}]</div-->
+
+
+
+
