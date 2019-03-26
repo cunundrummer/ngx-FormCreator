@@ -9,6 +9,7 @@ import { FieldWrapper } from '@ngx-formly/core';
 export class InputWithCounterWrapperComponent extends FieldWrapper implements OnInit {
   @ViewChild('fieldComponent', {read: ViewContainerRef}) fieldComponent: ViewContainerRef;
 
+  // todo: if this will not be used, remove this wrapper
   ngOnInit() {
     console.log(this.fieldComponent);
   }

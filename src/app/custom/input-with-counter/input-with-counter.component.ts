@@ -56,7 +56,6 @@ export class InputWithCounterComponent extends FieldType implements OnInit, Afte
    * @description gets the validation names and trims them too match actual validations
    */
   getValidationNames(): string[] {
-    // console.log(this.validationService.getValidationNames());
     return this.validationService.getValidationNames();
   }
 
@@ -101,6 +100,7 @@ export class InputWithCounterComponent extends FieldType implements OnInit, Afte
    * @description shortens a string by removing the instances of substrings(str)
    * @param fromStr the string you want to remove substrings from
    * @param substrToRemove substrings to remove
+   * @todo place this in a utilitiesService
    *
    */
   strStripper(fromStr: string, ...substrToRemove: string[]): string {

@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { FormControl, ValidationErrors } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export const ValidationMessages = {
-  required: (err, field) => {
+  required: (err: boolean, field: FormlyFieldConfig) => {
     // console.log(err); //boolean
     // console.log(field); // fieldControl
     return `This field is required!`;
   },
-  minlength: (err, field) => {
+  minlength: (err: boolean, field: FormlyFieldConfig) => {
     return `Should have at least ${field.templateOptions.minLength} characters`;
   },
-  maxlength: (err, field) => {
+  maxlength: (err: boolean, field: FormlyFieldConfig) => {
     return `This value should be less than ${field.templateOptions.maxLength} characters`;
   },
-  min: (err, field) => {
+  min: (err: boolean, field: FormlyFieldConfig) => {
     return `This value should be more than ${field.templateOptions.min}`;
   },
-  max: (err, field) => {
+  max: (err: boolean, field: FormlyFieldConfig) => {
     return `This value should be less than ${field.templateOptions.max}`;
   }
 };
@@ -55,8 +56,7 @@ export class ValidationService {
   getValidationMessage(errorStr: string, field) {
     const validations = ValidationMessages;
     console.log('getting validation message for: ', errorStr);
-    console.log(validations.required.name);
-    if (errorStr === validations[errorStr].name) {
+    if (errorStr && errorStr === validations[errorStr].name) {
       console.log(validations[errorStr](true, field));
       return validations[errorStr](true, field);
     }

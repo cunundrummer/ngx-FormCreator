@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { validations, validators } from './validations/validations';
-import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
 
 export interface IUniversalForm {
   adTitle: string;
@@ -23,9 +20,6 @@ export class AppComponent implements OnInit {
   universalForm = new FormGroup({});
   model: {} = {} as IUniversalForm;
   options: FormlyFormOptions = {};
-  length = '0';
-  length$: BehaviorSubject<string> = new BehaviorSubject('0');
-
   fields: FormlyFieldConfig[] = [
     {
       key: 'adtitle',
@@ -85,21 +79,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.fields);
-    this.length$
-      .pipe(
-        distinctUntilChanged()
-      )
-      .subscribe((val: string) => {
-        this.length = val;
-      });
   }
 
   submit() {
     console.log('Submitting ', JSON.stringify(this.model));
-  }
-
-  getLengthForDesciption(field): string {
-    console.log('this -> field: ', field);
-    return (field.formControl.value || '').length.toString();
   }
 }
