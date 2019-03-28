@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { ValidationService, Validators } from './validation.service';
 
 export interface IUniversalForm {
   adTitle: string;
@@ -47,9 +48,13 @@ export class AppComponent implements OnInit {
       type: 'radio',
       templateOptions: {
         label: 'For sale by',
-        options: [{ value: 'owner', key: 'owner' }, { value: 'dealer', key: 'dealer' }],
+        options: [
+          { value: 'owner', key: 'owner' },
+          { value: 'dealer', key: 'dealer' }
+        ],
         required: true,
-        description: 'DESCRIPTION'
+        labelPosition: 'before',
+        description: 'for sale by owner DESCRIPTION'
       },
     },
     {
@@ -62,6 +67,7 @@ export class AppComponent implements OnInit {
           { value: 'female', key: 'female' },
           { value: 'other', key: 'other' }
         ],
+        labelPosition: 'after',
         required: true
 
       }
@@ -75,7 +81,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private validationService: ValidationService) {}
 
   ngOnInit() {
     console.log(this.fields);

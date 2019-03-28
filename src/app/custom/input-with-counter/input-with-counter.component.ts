@@ -59,37 +59,34 @@ export class InputWithCounterComponent extends FieldType implements OnInit, Afte
     return this.validationService.getValidationNames();
   }
 
-  getFormFieldErrorMessage(ffCtrl?: FormControl) {
-    if (this.formFieldControl.empty && this.formControl.untouched) {
-      console.log('no errors yet');
-    }
-  }
-
+  /**
+   * @description Get the name of the formfield error, compares with validations from Validation Service.  If the methods in the validation
+   *              service are not already the same as the formfield errors, then it strips the validation names to conform to the formfield
+   *              errors. (Might be removed if standard is set - which should be.
+   */
   getCurrentFormFieldError(): string {
     let key = '';
     let errorFound = false;
-    this.assocValidations.forEach((av: string) => {
-      const strippedStr =
-        av.toLocaleLowerCase()
-          .replace('message', '')
-          .replace('validation', '');
-      // console.log(strippedStr);
+    console.log('<------Begin checking for formfielderrors------>');
+    for (const assocValidation of this.assocValidations) {
+      // just in case method names are different -> from a previous version.  Could possibly be removed / will need to be standardized
+      const strippedStr = this.strStripper(assocValidation, 'message', 'validation');
       if (this.formControl.errors && !errorFound) {
         console.log('found possible error...', this.formControl.errors);
-        Object.keys(this.formControl.errors).forEach(errkey => {
-          console.log(`comparing: ${strippedStr} : ${errkey}`);
-          if (strippedStr === errkey.toLocaleLowerCase()) {
-            console.log('After comparing, errkey: ',  errkey);
-            key = errkey;
+        for (const errKey of Object.keys(this.formControl.errors)) {
+          console.log(`comparing: ${strippedStr} : ${errKey}`);
+          if (strippedStr === errKey.toLocaleLowerCase()) {
+            console.log('After comparing, errkey: ',  errKey);
+            key = errKey;
             errorFound = true;
-            return key;
+            break; // ensure quick exit out of loop.
           }
-        });
+        }
       }
-    });
+    }
+    console.log('<------END checking for formfielderrors------>');
     if (key) {
       console.log('returning ', key);
-      console.log('errorFound? ', errorFound);
       return key || '';
     } else {
       console.log('Input looks good, returning \'undefined\'.');

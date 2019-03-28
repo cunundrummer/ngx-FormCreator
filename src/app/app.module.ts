@@ -7,17 +7,14 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { MaterialModule } from './material.module';
 
 import { AppComponent } from './app.component';
-
-import { validations, validators } from './validations/validations';
 import { InputWithCounterComponent } from './custom/input-with-counter/input-with-counter.component';
-import { InputWithCounterWrapperComponent } from './custom/input-with-counter-wrapper/input-with-counter-wrapper.component';
-import { ValidationService } from './validation.service';
+
+import { ValidationMessages, ValidationService, Validators } from './validation.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     InputWithCounterComponent,
-    InputWithCounterWrapperComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,24 +25,26 @@ import { ValidationService } from './validation.service';
     FormlyMaterialModule,
     FormlyModule.forRoot({
       types: [
-        {name: 'inputWithCounter', extends: 'input', component: InputWithCounterComponent},
-        {name: 'inputWithCounter2', component: InputWithCounterComponent}
-      ],
-      wrappers: [
-        { name: 'inputWithCounterWrapper', component: InputWithCounterWrapperComponent}
-      ],
-      validators: [
-        {name: 'required', validation: validators.required},
-        {name: 'minLength', validation: validators.minlengthValidation},
-        {name: 'maxLength', validation: validators.maxlengthValidation}
+        {
+          name: 'inputWithCounter',
+          extends: 'input',
+          component: InputWithCounterComponent,
+        },
+        {
+          name: 'inputWithCounter2',
+          component: InputWithCounterComponent,
+          defaultOptions: {
+            validators: {
+              required: Validators.required,
+              minLength: Validators.minlengthValidation
+            }
+          },
+        }
       ],
       validationMessages: [
-        {name: 'required', message: validations.requiredMessage},
-        {name: 'minlength', message: validations.minlengthValidationMessage},
-        {name: 'maxlength', message: validations.maxlengthValidationMessage},
-        {name: 'min', message: validations.minValidationMessage},
-        {name: 'max', message: validations.maxValidationMessage},
-      ]
+        // todo: retrieve the messages from the validationService (still getting comfortable with ngx-formly)
+        { name: 'required', message: 'This field is required' },
+      ],
     }),
   ],
   entryComponents: [],
