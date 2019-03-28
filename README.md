@@ -1,4 +1,4 @@
-##Purpose
+## Purpose
 
 While creating a dynamic form is fun, it could be time consuming.  I have tried formly before and as a basic form creation utility, it worked flawlessly.  However, when I tried to add a character counter, or display an error within a custom component, I had trouble, resulting in me creating a dynamic form lib. in regular 'ol Angular. 
 
