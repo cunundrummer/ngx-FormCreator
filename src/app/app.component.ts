@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   fields: FormlyFieldConfig[] = [
     {
       key: 'adtitle',
-      type: 'inputWithCounter2',
+      type: 'inputWithCounter',
       templateOptions: {
         label: 'Ad title',
         required: true,

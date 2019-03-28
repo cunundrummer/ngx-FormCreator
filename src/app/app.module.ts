@@ -27,16 +27,12 @@ import { ValidationMessages, ValidationService, Validators } from './validation.
       types: [
         {
           name: 'inputWithCounter',
-          extends: 'input',
-          component: InputWithCounterComponent,
-        },
-        {
-          name: 'inputWithCounter2',
           component: InputWithCounterComponent,
           defaultOptions: {
             validators: {
               required: Validators.required,
-              minLength: Validators.minlengthValidation
+              minLength: Validators.minlengthValidation,
+              // maxLength: Validators.maxlengthValidation
             }
           },
         }
