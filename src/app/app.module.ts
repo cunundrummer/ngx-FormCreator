@@ -5,11 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { MaterialModule } from './material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { InputWithCounterComponent } from './custom/input-with-counter/input-with-counter.component';
 
 import { ValidationMessages, ValidationService, Validators } from './validation.service';
+import { FormFieldFetcherService } from './form-field-fetcher.service';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { ValidationMessages, ValidationService, Validators } from './validation.
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     FormlyMaterialModule,
@@ -44,7 +47,7 @@ import { ValidationMessages, ValidationService, Validators } from './validation.
     }),
   ],
   entryComponents: [],
-  providers: [ValidationService],
+  providers: [ValidationService, FormFieldFetcherService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

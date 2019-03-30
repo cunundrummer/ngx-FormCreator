@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService, Validators } from './validation.service';
+import { FormFieldFetcherService } from './form-field-fetcher.service';
 
 export interface IUniversalForm {
   adTitle: string;
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = [
     {
-      key: 'adtitle',
+      key: 'adTitle',
       type: 'inputWithCounter',
       templateOptions: {
         label: 'Ad title',
@@ -81,13 +82,21 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  constructor(private validationService: ValidationService) {}
+  constructor(private validationService: ValidationService, private fieldFetcherService: FormFieldFetcherService) {}
 
   ngOnInit() {
     console.log(this.fields);
+    console.log('Testing fetcher service...');
+    this.getFormFieldsConfigsFromDB('adTitle');
   }
 
   submit() {
     console.log('Submitting ', JSON.stringify(this.model));
+  }
+
+  getFormFieldsConfigsFromDB(keyToRetrieve: string) {
+    this.fieldFetcherService.getFormFieldConfig(keyToRetrieve).subscribe(result => {
+      console.log('in subscription, received result ', result);
+    });
   }
 }
