@@ -1,3 +1,11 @@
+## Purpose
+
+While creating a dynamic form is fun, it could be time consuming.  I have tried formly before and as a basic form creation utility, it worked flawlessly.  However, when I tried to add a character counter, or display an error within a custom component, I had trouble, resulting in me creating a dynamic form lib. in regular 'ol Angular. 
+
+So, after some more experience with Angular and Typescript, I attempted again.  After a few more frustrating attempts, I figured it out - and still finding more and quicker ways to do things. 
+
+This is the result.  Not completed yet as I want to get the form configuration from my database.  But it is functioning as I want it :)
+
 # FormCreator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
