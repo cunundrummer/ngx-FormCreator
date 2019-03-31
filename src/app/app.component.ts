@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Form, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { ValidationService, Validators } from './validation.service';
+import { ValidationService } from './validation.service';
 import { FormFieldFetcherService } from './form-field-fetcher.service';
 import { isArray } from 'util';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 export interface IUniversalForm {
   adTitle: string;
@@ -20,12 +20,51 @@ export interface IUniversalForm {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   universalForm = new FormGroup({});
   model: {} = {} as IUniversalForm;
   options: FormlyFormOptions = {};
-  fieldsFromDB: BehaviorSubject<FormlyFieldConfig[]> = new BehaviorSubject<FormlyFieldConfig[]>([]);
-  /*fields: FormlyFieldConfig[] = [
+  fieldsFromDB$: BehaviorSubject<FormlyFieldConfig[]> = new BehaviorSubject<FormlyFieldConfig[]>([]);
+  fieldsFromDBSubs$: Subscription;
+
+  constructor(private validationService: ValidationService, private fieldFetcherService: FormFieldFetcherService) {}
+
+  ngOnInit() {
+    // console.log(this.fields);
+    console.log('Testing fetcher service...');
+    this.getFormFieldsConfigsFromDB('adTitle');
+  }
+
+  submit() {
+    console.log('Submitting ', JSON.stringify(this.model));
+  }
+
+  /**
+   * @description Instead of supplying the array of formlyFieldConfigs (as in formly's examples), this method take an (n) amount of
+   *              strings(keys associated to the database) and returns the formlyFieldConfig[]
+   * @param keyToRetrieve string that is the key associated with the database
+   * @warn must unsubscribe!  Always check that the service is associated with unsubscriber.
+   * @todo set keyToRetrieve to ...keysToRetrieve: string[].  This way, the entire form for the specific page can be built.
+   */
+  getFormFieldsConfigsFromDB(keyToRetrieve: string) {
+    this.fieldsFromDBSubs$ = this.fieldFetcherService.getFormFieldConfig(keyToRetrieve).subscribe(result => {
+        console.log('in subscription, received result ', result);
+        if (isArray(result)) {
+          const {key, type: type, templateOptions: templateOptions} = {...result[0].fieldAttribs} as FormlyFieldConfig;
+          this.fieldsFromDB$.next([{...{key, type, templateOptions}}]);
+          console.log(this.fieldsFromDB$.getValue());
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.fieldsFromDBSubs$) {
+      this.fieldsFromDBSubs$.unsubscribe();
+    }
+  }
+}
+
+/*fields: FormlyFieldConfig[] = [ // kept as reference until I'm sure my db has the values of each object
     {
       key: 'adTitle',
       type: 'inputWithCounter',
@@ -84,28 +123,3 @@ export class AppComponent implements OnInit {
       },
     },
   ];*/
-
-  constructor(private validationService: ValidationService, private fieldFetcherService: FormFieldFetcherService) {}
-
-  ngOnInit() {
-    // console.log(this.fields);
-    console.log('Testing fetcher service...');
-    this.getFormFieldsConfigsFromDB('adTitle');
-  }
-
-  submit() {
-    console.log('Submitting ', JSON.stringify(this.model));
-  }
-
-  getFormFieldsConfigsFromDB(keyToRetrieve: string) {
-    this.fieldFetcherService.getFormFieldConfig(keyToRetrieve)
-      .subscribe(result => {
-        console.log('in subscription, received result ', result);
-        if (isArray(result)) {
-          const {key, type: type, templateOptions: templateOptions} = {...result[0].fieldAttribs} as FormlyFieldConfig;
-          this.fieldsFromDB.next([{...{key, type, templateOptions}}]);
-          console.log(this.fieldsFromDB.getValue());
-        }
-      });
-  }
-}

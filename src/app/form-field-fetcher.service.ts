@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export interface IFormFieldResult {
@@ -22,10 +21,6 @@ export class FormFieldFetcherService {
   getFormFieldConfig(fieldname?: string) {
     const URL = this.host + ':' + this.port + '/' + this.routePath + '/' + fieldname;
     console.log('retrieving * from ', URL);
-    return this.httpService.get<IFormFieldResult>(URL).pipe(
-      tap((result) => {
-        // console.log('retrieved result: ', result);
-      })
-    );
+    return this.httpService.get<IFormFieldResult[]>(URL);
   }
 }
