@@ -4,11 +4,17 @@ While creating a dynamic form is fun, it could be time consuming.  I have tried 
 
 So, after some more experience with Angular and Typescript, I attempted again.  After a few more frustrating attempts, I figured it out - and still finding more and quicker ways to do things. 
 
-This is the result.  Not completed yet as I want to get the form configuration from my database.  But it is functioning as I want it :)
+This is the result.  ~~Not completed yet as I want to get the form configuration from my database.~~  But it is functioning as I want it :)
+
+As of today: Sun March 31, 17:28, I can retrieve it from the database.  Good job, me!
 
 # FormCreator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
+
+Also using [Angular (ngx)Formly](https://ngx-formly.github.io/ngx-formly)
+
+and [Angular Material](https://material.angular.io).
 
 ## Development server
 
