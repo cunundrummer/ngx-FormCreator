@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Form, FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService, Validators } from './validation.service';
 import { FormFieldFetcherService } from './form-field-fetcher.service';
+import { isArray } from 'util';
+import { BehaviorSubject } from 'rxjs';
 
 export interface IUniversalForm {
   adTitle: string;
@@ -22,7 +24,8 @@ export class AppComponent implements OnInit {
   universalForm = new FormGroup({});
   model: {} = {} as IUniversalForm;
   options: FormlyFormOptions = {};
-  fields: FormlyFieldConfig[] = [
+  fieldsFromDB: BehaviorSubject<FormlyFieldConfig[]> = new BehaviorSubject<FormlyFieldConfig[]>([]);
+  /*fields: FormlyFieldConfig[] = [
     {
       key: 'adTitle',
       type: 'inputWithCounter',
@@ -80,12 +83,12 @@ export class AppComponent implements OnInit {
         label: 'Checkbox label',
       },
     },
-  ];
+  ];*/
 
   constructor(private validationService: ValidationService, private fieldFetcherService: FormFieldFetcherService) {}
 
   ngOnInit() {
-    console.log(this.fields);
+    // console.log(this.fields);
     console.log('Testing fetcher service...');
     this.getFormFieldsConfigsFromDB('adTitle');
   }
@@ -95,8 +98,14 @@ export class AppComponent implements OnInit {
   }
 
   getFormFieldsConfigsFromDB(keyToRetrieve: string) {
-    this.fieldFetcherService.getFormFieldConfig(keyToRetrieve).subscribe(result => {
-      console.log('in subscription, received result ', result);
-    });
+    this.fieldFetcherService.getFormFieldConfig(keyToRetrieve)
+      .subscribe(result => {
+        console.log('in subscription, received result ', result);
+        if (isArray(result)) {
+          const {key, type: type, templateOptions: templateOptions} = {...result[0].fieldAttribs} as FormlyFieldConfig;
+          this.fieldsFromDB.next([{...{key, type, templateOptions}}]);
+          console.log(this.fieldsFromDB.getValue());
+        }
+      });
   }
 }
