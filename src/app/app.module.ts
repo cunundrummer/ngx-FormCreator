@@ -34,15 +34,14 @@ import { FormFieldFetcherService } from './form-field-fetcher.service';
           defaultOptions: {
             validators: {
               required: Validators.required,
-              minLength: Validators.minlengthValidation,
-              // maxLength: Validators.maxlengthValidation
+              minLength: Validators.minlengthValidation
             }
           },
         }
       ],
       validationMessages: [
-        // todo: retrieve the messages from the validationService (still getting comfortable with ngx-formly)
-        { name: 'required', message: 'This field is required' },
+        { name: 'required', message: ValidationMessages.required.bind(Validators.required) },
+        { name: 'minlength', message: ValidationMessages.minlength.bind(Validators.minlengthValidation) }
       ],
     }),
   ],

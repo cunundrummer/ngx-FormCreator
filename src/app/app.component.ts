@@ -30,9 +30,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private validationService: ValidationService, private fieldFetcherService: FormFieldFetcherService) {}
 
   ngOnInit() {
-    // console.log(this.fields);
-    console.log('Testing fetcher service...');
-    this.getFormFieldsConfigsFromDB('adTitle');
+    // console.log('Testing fetcher service...');
+    this.getFormFieldConfigs(['adTitle', 'description']);
   }
 
   submit() {
@@ -42,17 +41,20 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    * @description Instead of supplying the array of formlyFieldConfigs (as in formly's examples), this method take an (n) amount of
    *              strings(keys associated to the database) and returns the formlyFieldConfig[]
-   * @param keyToRetrieve string that is the key associated with the database
-   * @warn must unsubscribe!  Always check that the service is associated with unsubscriber.
-   * @todo set keyToRetrieve to ...keysToRetrieve: string[].  This way, the entire form for the specific page can be built.
+   * @param keysToRetrieve: string that is the key associated with the database
+   * @warn must unsubscribe!  Always check that the service is associated with un-subscriber.
    */
-  getFormFieldsConfigsFromDB(keyToRetrieve: string) {
-    this.fieldsFromDBSubs$ = this.fieldFetcherService.getFormFieldConfig(keyToRetrieve).subscribe(result => {
-        console.log('in subscription, received result ', result);
-        if (isArray(result)) {
-          const {key, type: type, templateOptions: templateOptions} = {...result[0].fieldAttribs} as FormlyFieldConfig;
-          this.fieldsFromDB$.next([{...{key, type, templateOptions}}]);
-          console.log(this.fieldsFromDB$.getValue());
+  getFormFieldConfigs(keysToRetrieve: string[]) {
+    this.fieldsFromDBSubs$ = this.fieldFetcherService.getFormFieldConfigs(keysToRetrieve)
+      .subscribe(results => {
+        console.log('in subscription, received result ', results);
+        if (isArray(results)) {
+          const tempFieldArr = [] as FormlyFieldConfig[];
+          for (const result of results) {
+            const {key, type, templateOptions} = {...result.fieldAttribs} as FormlyFieldConfig;
+            tempFieldArr.push({key, type, templateOptions});
+          }
+          this.fieldsFromDB$.next(tempFieldArr);
         }
       });
   }
