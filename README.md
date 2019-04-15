@@ -8,6 +8,8 @@ This is the result.  ~~Not completed yet as I want to get the form configuration
 
 As of today: Sun March 31, 17:28, I can retrieve it from the database.  Good job, me!
 
+Mon Apr 15, 14:25:  I forked and have managed to create the form configuration on the backend, and send it to the front-end to be rendered.  By placing the function body in string litererals, I have managed to get things working. However, it does not seem safe to continue in that way.  Security is more important! I will try another method and hopefully the end result does not inflate the size of the project.  
+
 # FormCreator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
