@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { InputWithCounterComponent } from './custom/input-with-counter/input-with-counter.component';
+import { WrapperComponent } from './custom/wrapper/wrapper.component';
 
 import { ValidationMessages, ValidationService, Validators } from './validation.service';
 import { FormFieldFetcherService } from './form-field-fetcher.service';
@@ -17,6 +18,7 @@ import { FormFieldFetcherService } from './form-field-fetcher.service';
   declarations: [
     AppComponent,
     InputWithCounterComponent,
+    WrapperComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,9 @@ import { FormFieldFetcherService } from './form-field-fetcher.service';
             }
           },
         }
+      ],
+      wrappers: [
+        { name: 'wrapper', component: WrapperComponent },
       ],
       validationMessages: [
         { name: 'required', message: ValidationMessages.required.bind(Validators.required) },

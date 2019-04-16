@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { Observable } from 'rxjs';
 
 export interface IFormFieldResult {
   id: number | string;
@@ -28,7 +29,7 @@ export class FormFieldFetcherService {
     return this.httpService.get<IFormFieldResult[]>(URL);
   }
 
-  getFormFieldConfigs(fieldnames?: string[]) {
+  getFormFieldConfigs(fieldnames?: string[]): Observable<IFormFieldResult[]> {
     const fieldKeys =  fieldnames.map((formFieldName: string) => {
       return {formFieldName};
     });

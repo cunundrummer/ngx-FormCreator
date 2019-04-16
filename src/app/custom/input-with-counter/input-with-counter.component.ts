@@ -46,7 +46,7 @@ export class InputWithCounterComponent extends FieldType implements OnInit, Afte
 
   ngAfterViewInit() {
     console.log('-----ngAfterViewInit-----');
-    // console.log(this.genericInput.nativeElement.minLength); // this is the proper place for logging generic input
+    // this is the proper place for logging generic input
     console.log(this.genericInputRef.element);
     console.log('?field?: ', this.field);
     console.log('-----ngAfterViewInit-----');
@@ -97,7 +97,7 @@ export class InputWithCounterComponent extends FieldType implements OnInit, Afte
    * @description shortens a string by removing the instances of substrings(str)
    * @param fromStr the string you want to remove substrings from
    * @param substrToRemove substrings to remove
-   * @todo place this in a utilitiesService
+   * @todo place this in a utilitiesService - utilities/string utilities
    *
    */
   strStripper(fromStr: string, ...substrToRemove: string[]): string {
