@@ -10,6 +10,8 @@ As of today: Sun March 31, 17:28, I can retrieve it from the database.  Good job
 
 Mon Apr 15, 14:25:  I forked and have managed to create the form configuration on the backend, and send it to the front-end to be rendered.  By placing the function body in string litererals, I have managed to get things working. However, it does not seem safe to continue in that way.  Security is more important! I will try another method and hopefully the end result does not inflate the size of the project.  
 
+Tue Apr 16 16:25:  Aborted bringing function bodies from outer sources.  Seems unsafe and hard to debug/maintain.  I'll do the standard thing and create classes for custom field controls.
+
 # FormCreator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
